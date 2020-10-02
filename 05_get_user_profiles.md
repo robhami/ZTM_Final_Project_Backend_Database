@@ -1,3 +1,7 @@
+## Get User profiles ##
+
+
+### Select command from Knex ###
 Add to profile get function: 
 
 ```
@@ -20,11 +24,13 @@ app.get('/profile/:id', (req, res) => {
 })
 
 ```
+
 Do GET request in Postman: 
 
 ```
 localhost:3000/profile/1
 ```
+
 This returns all users in console: 
 ```
 [
@@ -58,9 +64,12 @@ This returns all users in console:
   }
 ]
 ```
+### Use WHERE method in Knex to define parameters ###
+
 Go to knex where section:
 http://knexjs.org/#Builder-where
- then add the following based on info there:
+
+Then add the following based on info there:
  
  ```
  db.select('*').from('users').where ({
@@ -71,7 +80,9 @@ http://knexjs.org/#Builder-where
 		console.log(user);
 	})
  ```
- This should give when do Postan man get as used before (i.e. user 1):
+ 
+ This should give when do Postman get as used before (i.e. user 1):
+ 
  ```
   [
   {
@@ -82,7 +93,11 @@ http://knexjs.org/#Builder-where
     joined: 2020-09-27T18:11:20.333Z
   }
 ]
- To just grab user without Array brackets use [0] after user, also change console.log resp.json. Also use ES6 on id as id=id: 
+```
+### Tidy up and get JSON response ###
+
+To grab user without Array brackets use [0] after user, also change console.log resp.json. Also use ES6 on id as id=id. 
+Then comment out found variable and if(!found) as boolean if is removed. 
 ```
 	app.get('/profile/:id', (req, res) => {
 	const {id} = req.params;
@@ -101,7 +116,8 @@ http://knexjs.org/#Builder-where
 	});
 
 ```
-  Add in check to see if user exists as found is not working now. 
+### User valid check and catch error ###
+Look at user length to define if value exists and add a catch error if something else goes wrong. 
   
 ```
 
