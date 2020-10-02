@@ -20,7 +20,7 @@ app.get('/profile/:id', (req, res) => {
 })
 
 ```
-Do get request in Postman: 
+Do GET request in Postman: 
 
 ```
 localhost:3000/profile/1
@@ -70,9 +70,9 @@ http://knexjs.org/#Builder-where
 	.then(user => {
 		console.log(user);
 	})
-  ```
+ ```
  This should give when do Postan man get as used before (i.e. user 1):
-  ```
+ ```
   [
   {
     id: 1,
@@ -83,10 +83,9 @@ http://knexjs.org/#Builder-where
   }
 ]
  To just grab user without Array brackets use [0] after user, also change console.log resp.json. Also use ES6 on id as id=id: 
-  ```
-app.get('/profile/:id', (req, res) => {
+```
+	app.get('/profile/:id', (req, res) => {
 	const {id} = req.params;
-	// let found=false;
 
 	db.select('*').from('users').where (
 		{id}
@@ -99,16 +98,16 @@ app.get('/profile/:id', (req, res) => {
 	// if(!found){
 	// 	res.status(404).json('no such user');
 	// }
-});
+	});
 
-  ```
+```
   Add in check to see if user exists as found is not working now. 
   
 ```
-app.get('/profile/:id', (req, res) => {
-	const {id} = req.params;
-	// let found=false;
 
+	app.get('/profile/:id', (req, res) => {
+	const {id} = req.params;
+	
 	db.select('*').from('users').where (
 		{id}
 	)
@@ -122,5 +121,6 @@ app.get('/profile/:id', (req, res) => {
 	})
 	.catch(err => res.status(400).json('error getting user'))
 	
-})
+	})
+
 ```
