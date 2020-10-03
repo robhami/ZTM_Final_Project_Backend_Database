@@ -81,3 +81,65 @@ If do John1@gmail.com POST in Postman get it as follows in response:
     "joined": "2020-10-03T07:19:32.074Z"
 }
 ```
+### Sign In ###
+Delete old stuff from /signin post. Then add the below.
+This gets email and hash from login db where the value matches what's in the body in Postman and logs it in console.
+```
+app.post('/signin',(req,res)=>{
+
+	db.select('email', 'hash').from('login')
+		.where('email', '=', req.body.email)
+		.then(data => {
+			console.log(data);
+		})
+})
+
+```
+Output when do POST localhost: 300/signin in Postman:
+```
+[
+  {
+    email: 'john@gmail.com',
+    hash: '$2a$10$qJMmQrL9i3AMn9fySSu3ZuSX0eVtwcjkNxCIsizOxJXOAB45zOUSe'
+  },
+  {
+    email: 'john1@gmail.com',
+    hash: '$2a$10$BdIDWY2GzAlXhgYzCkyXE.l4AYtvofBFA/o6RZoNCzOTG1DO/cqmK'
+  }
+]
+```
+#### bcrypt compareSync and respond with json ####
+Then set isValid to compare body password with hash value using bcrypt. If true select all columns from users where email matches whats in body. Then respond with user[0] and add error catches:
+```
+app.post('/signin',(req,res)=>{
+	
+	db.select('email', 'hash').from('login')
+		.where('email', '=', req.body.email)
+		.then(data => {
+			
+			const isValid=bcrypt.compareSync(req.body.password, data[0].hash);
+			console.log(isValid);
+			if(isValid){
+				return db.select('*').from ('users')
+					.where('email', '=', req.body.email)
+					.then(user => {
+						res.json(user[0])
+					})
+					.catch(err => res.status(400).json('unable to get user'))
+			} else {
+			res.status(400).json('wrong dredentials')
+			}
+		})
+		.catch(err => res.status(400).json('wrong credentials'))
+})
+```
+Output when do POST localhost: 300/signin in Postman:
+```
+{
+    "id": 16,
+    "name": "John",
+    "email": "john1@gmail.com",
+    "entries": "0",
+    "joined": "2020-10-03T07:19:32.074Z"
+}
+```
