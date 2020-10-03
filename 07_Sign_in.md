@@ -58,3 +58,16 @@ smartbrain=# SELECT * FROM login;
   7 | $2a$10$qJMmQrL9i3AMn9fySSu3ZuSX0eVtwcjkNxCIsizOxJXOAB45zOUSe | john@gmail.com
 (1 row)
 ```
+To get email fixed do (already added to code above): 
+```
+email: loginEmail[0],
+```
+If do John1@gmail.com POST in Postman get it as follows in response:
+```
+{
+    "id": 16,
+    "name": "John",
+    "email": "john1@gmail.com",
+    "entries": "0",
+    "joined": "2020-10-03T07:19:32.074Z"
+}
