@@ -1,4 +1,6 @@
 ## Sign In ##
+
+### Registering using transactions to update login and user db's ###
  
 Transactions - are code blocks that we add to make sure when doing multiple operations when one fails then they all fail. 
 So if you can add to users but not login then they will both fail.
