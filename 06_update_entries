@@ -33,3 +33,8 @@ app.put('/image',(req,res)=>{
   	.catch(err => res.status(400).json('unable to get entries'))
   })
 ```
+
+This will return number of entries in Postman response pane when you do a PUT request: 
+
+localhost:3000/image
+
