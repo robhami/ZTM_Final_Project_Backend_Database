@@ -3,7 +3,16 @@
 Transactions - are code blocks that we add to make sure when doing multiple operations when one fails then they all fail. 
 So if you can add to users but not login then they will both fail.
 
-Get data from bcrypt: 
+Get data from bcrypt and add transaction that insert hash and email into login table (and users data to users table). This returns email that is used as loginEmail. This then adds data to users table using prior code but change return db to return trx ('users') and insert data. ***** not sure what return and returning does *******: 
+
+Also need to add 
+```
+.then(trx.commit)
+.catch(trx.rollback)
+```
+
+Commit gets data (trx) sent to database.
+Rollback rolls any changes back if anything goes wrong.
 
 ```
 app.post('/register',(req,res)=>{
@@ -38,8 +47,6 @@ app.post('/register',(req,res)=>{
 })
 
 ```
-
-
 When do POST localhost:3000/register Postman this returns:
 ```
 {
@@ -71,3 +78,4 @@ If do John1@gmail.com POST in Postman get it as follows in response:
     "entries": "0",
     "joined": "2020-10-03T07:19:32.074Z"
 }
+```
